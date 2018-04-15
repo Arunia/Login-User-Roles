@@ -20,9 +20,9 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 		UserBuilder users = User.withDefaultPasswordEncoder();
 		
 		auth.inMemoryAuthentication()
-			.withUser(users.username("john").password("test123").roles("EMPLOYEE"))
-			.withUser(users.username("mary").password("test123").roles("EMPLOYEE","MANAGER"))
-			.withUser(users.username("susan").password("test123").roles("EMPLOYEE","ADMIN"));
+			.withUser(users.username("john").password("test").roles("EMPLOYEE"))
+			.withUser(users.username("mary").password("test").roles("EMPLOYEE", "MANAGER"))
+			.withUser(users.username("susan").password("test").roles("EMPLOYEE", "ADMIN"));
 		
 	}
 
@@ -41,7 +41,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 				.permitAll()
 			.and()
 			// add logout support for default URL /logout (will send data to /logout and logout URL will be handled by Spring Security Filters) 
-			// no codind required!!!
+			// no coding required!!!
 			.logout().permitAll()
 			.and()
 			// "/access-denied" = the request mapping path, it could be anything

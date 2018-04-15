@@ -26,27 +26,33 @@
 	
 	<hr>
 	
-	<!-- Add a link to point to /leaders ... this is for the managers -->
-	<p>
-		<a href="${pageContext.request.contextPath}/leaders">Leadership Meeting</a>
-		(Only for Manager peeps)
-	</p>
+	<!-- Only show this section for the user with MANAGER role -->
+	<security:authorize access="hasRole('MANAGER')">
+		<!-- Add a link to point to /leaders ... this is for the managers -->
+		<p>
+			<a href="${pageContext.request.contextPath}/leaders">Leadership Meeting</a>
+			(Only for Manager peeps)
+		</p>
+	</security:authorize>
 	
-	<!-- Add a link to point to /systems ... this is for the admins -->
-	<p>
-		<a href="${pageContext.request.contextPath}/systems">IT Systems People</a>
-		(Only for Admin peeps)
-	</p>
+	<!-- Add a logout button -->
+	<security:authorize access="hasRole('ADMIN')">
+		<!-- Add a link to point to /systems ... this is for the admins -->
+		<p>
+			<a href="${pageContext.request.contextPath}/systems">IT Systems People</a>
+			(Only for Admin peeps)
+		</p>
+	</security:authorize>	
+	
 	
 	<hr>
 	
 	
-	<!-- Add a logout button -->
 	<form:form action="${pageContext.request.contextPath}/logout"
 				method="POST">
 		<input type="submit" value="Logout" />	
-	
 	</form:form>
+	
 	
 </body>
 

@@ -24,24 +24,28 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 			.withUser(users.username("mary").password("test123").roles("EMPLOYEE","MANAGER"))
 			.withUser(users.username("susan").password("test123").roles("EMPLOYEE","ADMIN"));
 		
-
-		
-		
-		
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		
 		http.authorizeRequests()
-		.anyRequest().authenticated()
-	.and()
-	.formLogin()
-		.loginPage("/showMyLoginPage")
-		.loginProcessingUrl("/authenticateTheUser")
-		.permitAll()
-	.and()
-	.logout().permitAll(); // add logout support for default URL /logout (will send data to /logout and logout URL will be handled by Spring Security Filters) 
-	// no codind required!!!
+				// .anyRequest().authenticated()
+			.antMatchers("/").hasRole("EMPLOYEE")
+			.antMatchers("/leaders/**").hasRole("MANAGER")
+			.antMatchers("/systems/**").hasRole("ADMIN")					
+			.and()
+			.formLogin()
+				.loginPage("/showMyLoginPage")
+				.loginProcessingUrl("/authenticateTheUser")
+				.permitAll()
+			.and()
+			// add logout support for default URL /logout (will send data to /logout and logout URL will be handled by Spring Security Filters) 
+			// no codind required!!!
+			.logout().permitAll()
+			.and()
+			// "/access-denied" = the request mapping path, it could be anything
+			.exceptionHandling().accessDeniedPage("/access-denied");
 	
 	}
 	
